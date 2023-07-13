@@ -78,6 +78,7 @@ import java.util.stream.Collectors
 
 import qupath.lib.images.servers.TransformedServerBuilder
 import java.awt.geom.AffineTransform
+import javax.swing.*
 
 import static qupath.lib.gui.scripting.QPEx.*
 def currentImageName = getProjectEntry().getImageName()
@@ -87,13 +88,23 @@ def currentImageName = getProjectEntry().getImageName()
 def deleteExisting = false // SET ME! Delete existing objects
 def createInverse = true // SET ME! Change this if things end up in the wrong place
 def performDeconvolution = false // If brightfield image, separate channels into individual stains (remember to set them in original image)
-String refStain = "PTEN" // Specify reference stain, should be same as in 'Calculate-Transforms.groovy'
+String refStain = "DAB" // Specify reference stain, should be same as in 'Calculate-Transforms.groovy'
 // Define an output path where the merged file should be written
 // Recommended to use extension .ome.tif (required for a pyramidal image)
 // If null, the image will be opened in a viewer
 String pathOutput = null
-//pathOutput = buildFilePath(PROJECT_BASE_DIR, currentImageName + '.ome.tif')
+pathOutput = buildFilePath(PROJECT_BASE_DIR, currentImageName + '.ome.tif')
 double outputDownsample = 1 // Choose how much to downsample the output (can be *very* slow to export large images with downsample 1!)
+
+def prompt(windowName, initialText) {
+  JFrame jframe = new JFrame()
+  jframe.toFront()
+  String answer = JOptionPane.showInputDialog(jframe, windowName, initialText)
+  jframe.dispose()
+  answer
+}
+
+refStain = prompt("Specify the reference staining", refStain)
 
 //////////////////////////////////////////////////////////////
 
@@ -189,7 +200,7 @@ def channels = []
 int c = 0
 for (def mapEntry : transforms.entrySet()) {
     print 'mapentry: ' + mapEntry
-    
+
     // Find the next image & transform
     def name = mapEntry.getKey()
     print(name)
@@ -203,7 +214,7 @@ for (def mapEntry : transforms.entrySet()) {
     def currentServer = imageData.getServer()
     def stains = imageData.getColorDeconvolutionStains()
     print(stains)
-    
+
     // Nothing more to do if we have the identity trainform & no stains
     if (transform.isIdentity() && stains == null) {
         channels.addAll(updateChannelNames(name, currentServer.getMetadata().getChannels()))

@@ -6,6 +6,7 @@
 // Michael Nelson 03/2020
 import static qupath.lib.gui.scripting.QPEx.*
 import qupath.ext.align.gui.ImageServerOverlay
+import javax.swing.*
 /*
 Usage:
 - Open reference image in viewer
@@ -13,10 +14,22 @@ Usage:
 - While the overlay is still open, set `name` to the name of the current moving image, and run script
  */
 
-//def name = getProjectEntry().getImageName()
+def name = getProjectEntry().getImageName()
 ////////////////////
 
-def name='D1_PIMO' //specify name of moving (transform) image, as listed in the project
+
+//def name='IM1_AEC.vsi' //specify name of moving (transform) image, as listed in the project
+
+
+def prompt(windowName, initialText) {
+  JFrame jframe = new JFrame()
+  jframe.toFront()
+  String answer = JOptionPane.showInputDialog(jframe, windowName, initialText)
+  jframe.dispose()
+  answer
+}
+
+name = promt("Name of moving image, as listed in the project (with suffix).", name)
 
 ////////////////////
 path = buildFilePath(PROJECT_BASE_DIR, 'Affine')
@@ -50,3 +63,4 @@ new File(path).withObjectOutputStream {
     it.writeObject(matrix)
 }
 print 'Done!'
+print 'Saved to ' + path
