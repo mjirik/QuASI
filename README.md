@@ -32,9 +32,9 @@ Use this script to generate transformation matrices for all images
 
 ### 01 Alignment - StoreMatrix automatic.groovy (optional)
 Use this script if you want to pull a transformation matrix from the `Interactive Image Alignment` GUI
-- Open reference image in viewer
+- Open reference image in viewer (`DAB` in our example)
 - Open the `Interactive Image Alignment` overlay, align an image
-- While the overlay is still open, set 'name' to the name of the current moving image, and run script
+- While the overlay is still open, run the script and  set 'name' to the name of the current moving image in the dialog
 
 ### 02 Apply-Transforms.groovy
 Use this script to apply the transform to WSIs, appending them together in one large multichannel ome.tiff, optionally including separated stains if brightfield (H&E or HDAB)

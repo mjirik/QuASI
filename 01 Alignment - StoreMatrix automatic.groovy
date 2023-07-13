@@ -29,7 +29,7 @@ def prompt(windowName, initialText) {
   answer
 }
 
-name = promt("Name of moving image, as listed in the project (with suffix).", name)
+name = prompt("Name of moving image, as listed in the project (with suffix).", name)
 
 ////////////////////
 path = buildFilePath(PROJECT_BASE_DIR, 'Affine')
