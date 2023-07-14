@@ -31,7 +31,9 @@ Use this script to generate transformation matrices for all images
 - run script, verify all moving images contain a transform file located in the 'Affine' folder
 
 ### 01 Alignment - StoreMatrix automatic.groovy (optional)
-Use this script if you want to pull a transformation matrix from the `Interactive Image Alignment` GUI
+Use this script if you want to pull a transformation matrix from the `Interactive Image Alignment` GUI.
+You can [download a `.jar` file from the github](https://github.com/qupath/qupath-extension-align/releases) and then 
+drag and this file into QuPath
 - Open reference image in viewer (`DAB` in our example)
 - Open the `Interactive Image Alignment` overlay, align an image
 - While the overlay is still open, run the script and  set 'name' to the name of the current moving image in the dialog
